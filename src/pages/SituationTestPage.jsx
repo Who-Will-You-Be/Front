@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+<<<<<<< HEAD
 // ─────────────────────────────────────────────
 // 테마별 진로검사 (CDSE-SF 기반, 학생 친화적 상황)
 // ─────────────────────────────────────────────
@@ -61,10 +62,34 @@ const THEMES = [
           { id: '4', text: '친구한테 연락해서 같이 하거나 아이디어 얻기', delta: { interest: { S: 25 }, aptitude: { 대인관계능력: 20, 언어능력: 10 }, values: { 사회봉사: 20, 사회적인정: 10 } } },
           { id: '5', text: '할 일 목록 만들고 시간 배분해서 체계적으로 시작', delta: { interest: { E: 25 }, aptitude: { 자기관리능력: 20, 대인관계능력: 10 }, values: { 능력발휘: 20, 사회적인정: 10 } } },
         ],
+=======
+const SITUATIONS = [
+  {
+    id: 1,
+    context: '학교 축제 준비 중, 팀에서 역할을 분담할 때',
+    question: '나는 어떤 역할을 선택할까?',
+    choices: [
+      {
+        id: 'A', text: '팀장을 자처해 전체 일정과 방향을 이끈다',
+        delta: { interest: { E: 25 }, aptitude: { 대인관계능력: 20, 자기관리능력: 10 }, values: { 성취: 20, 도전성: 10 } },
+      },
+      {
+        id: 'B', text: '예산과 일정을 꼼꼼히 계획하고 정리한다',
+        delta: { interest: { C: 25 }, aptitude: { 수리논리력: 20, 자기관리능력: 10 }, values: { 안정성: 20, 자기계발: 10 } },
+      },
+      {
+        id: 'C', text: '공연·전시 아이디어를 직접 기획하고 만든다',
+        delta: { interest: { A: 25 }, aptitude: { 창의력: 20, 예술시각능력: 10 }, values: { 즐거움: 20, 자율성: 10 } },
+      },
+      {
+        id: 'D', text: '팀원 사이에서 의견을 모으고 갈등을 조율한다',
+        delta: { interest: { S: 25 }, aptitude: { 대인관계능력: 20, 언어능력: 10 }, values: { 사회적기여: 20, 일과삶의균형: 10 } },
+>>>>>>> c42df025a017331aba6fe69b38a2f6c37c23c874
       },
     ],
   },
   {
+<<<<<<< HEAD
     id: 'talent',
     emoji: '🤷',
     color: '#3B82F6',
@@ -120,10 +145,32 @@ const THEMES = [
           { id: '4', text: '그 분야 사람 찾아가서 어떻게 하는지 물어봄', delta: { interest: { S: 25 }, aptitude: { 대인관계능력: 20, 언어능력: 10 }, values: { 사회봉사: 20, 사회적인정: 10 } } },
           { id: '5', text: '로드맵 검색해서 단계별로 할 것들 정리함', delta: { interest: { E: 25 }, aptitude: { 자기관리능력: 20, 대인관계능력: 10 }, values: { 능력발휘: 20, 사회적인정: 10 } } },
         ],
+=======
+    id: 2,
+    context: "수업 시간, 선생님이 '자유 주제 발표'를 요청했을 때",
+    question: '나는 어떤 주제를 선택할까?',
+    choices: [
+      {
+        id: 'A', text: '잘 알려지지 않은 사회 문제를 조사해 발표한다',
+        delta: { interest: { S: 25 }, aptitude: { 언어능력: 20, 대인관계능력: 10 }, values: { 사회적기여: 20, 자기계발: 10 } },
+      },
+      {
+        id: 'B', text: '과학 원리나 데이터 분석 결과를 발표한다',
+        delta: { interest: { I: 25 }, aptitude: { 수리논리력: 20, 자기관리능력: 10 }, values: { 자기계발: 20, 성취: 10 } },
+      },
+      {
+        id: 'C', text: '영상·그림을 활용한 창의적인 발표를 만든다',
+        delta: { interest: { A: 25 }, aptitude: { 예술시각능력: 20, 창의력: 10 }, values: { 즐거움: 20, 자율성: 10 } },
+      },
+      {
+        id: 'D', text: '직접 기획한 아이디어 프로젝트를 발표한다',
+        delta: { interest: { E: 25 }, aptitude: { 창의력: 20, 언어능력: 10 }, values: { 도전성: 20, 성취: 10 } },
+>>>>>>> c42df025a017331aba6fe69b38a2f6c37c23c874
       },
     ],
   },
   {
+<<<<<<< HEAD
     id: 'future',
     emoji: '😮‍💨',
     color: '#8B5CF6',
@@ -179,10 +226,32 @@ const THEMES = [
           { id: '4', text: '"1년씩 계획 세워서 하나씩 해나갈 거예요"', delta: { interest: { E: 25 }, aptitude: { 자기관리능력: 20, 대인관계능력: 10 }, values: { 능력발휘: 20, 사회적인정: 10 } } },
           { id: '5', text: '"안정적으로 잘 먹고 잘 살 수 있으면 좋겠어요"', delta: { interest: { C: 25 }, aptitude: { 자기관리능력: 20, 수리논리력: 10 }, values: { 안정성: 20, 보수: 10 } } },
         ],
+=======
+    id: 3,
+    context: '방과 후, 갑자기 자유 시간이 생겼을 때',
+    question: '나는 무엇을 할까?',
+    choices: [
+      {
+        id: 'A', text: '친구들을 모아 함께 할 것을 먼저 제안한다',
+        delta: { interest: { E: 25 }, aptitude: { 대인관계능력: 20, 언어능력: 10 }, values: { 즐거움: 20, 자율성: 10 } },
+      },
+      {
+        id: 'B', text: '혼자 관심 분야를 조사하거나 공부한다',
+        delta: { interest: { I: 25 }, aptitude: { 자기관리능력: 20, 수리논리력: 10 }, values: { 자기계발: 20, 성취: 10 } },
+      },
+      {
+        id: 'C', text: '음악, 그림, 글쓰기 같은 창작 활동을 한다',
+        delta: { interest: { A: 25 }, aptitude: { 창의력: 20, 예술시각능력: 10 }, values: { 즐거움: 20, 자율성: 10 } },
+      },
+      {
+        id: 'D', text: '친구 고민을 들어주거나 누군가를 돕는다',
+        delta: { interest: { S: 25 }, aptitude: { 대인관계능력: 20, 언어능력: 10 }, values: { 사회적기여: 20, 일과삶의균형: 10 } },
+>>>>>>> c42df025a017331aba6fe69b38a2f6c37c23c874
       },
     ],
   },
   {
+<<<<<<< HEAD
     id: 'dream',
     emoji: '😤',
     color: '#10B981',
@@ -238,6 +307,27 @@ const THEMES = [
           { id: '4', text: '누군가 돕는 것 - 상대방이 좋아질 때 느끼는 보람', delta: { interest: { S: 25 }, aptitude: { 대인관계능력: 20, 언어능력: 10 }, values: { 사회봉사: 20, 사회적인정: 10 } } },
           { id: '5', text: '이끌고 기획하는 것 - 결과를 만들어내는 성취감', delta: { interest: { E: 25 }, aptitude: { 자기관리능력: 20, 대인관계능력: 10 }, values: { 능력발휘: 20, 사회적인정: 10 } } },
         ],
+=======
+    id: 4,
+    context: '진로 체험 학습 날, 체험 분야를 선택할 때',
+    question: '나는 어떤 체험을 선택할까?',
+    choices: [
+      {
+        id: 'A', text: '기계·제작 실습 체험을 한다',
+        delta: { interest: { R: 25 }, aptitude: { 손재능: 20, 공간지각력: 10 }, values: { 성취: 20, 즐거움: 10 } },
+      },
+      {
+        id: 'B', text: '과학 연구소 또는 데이터 분석 체험을 한다',
+        delta: { interest: { I: 25 }, aptitude: { 수리논리력: 20, 자기관리능력: 10 }, values: { 자기계발: 20, 성취: 10 } },
+      },
+      {
+        id: 'C', text: '디자인·예술 창작 체험을 한다',
+        delta: { interest: { A: 25 }, aptitude: { 예술시각능력: 20, 창의력: 10 }, values: { 즐거움: 20, 자율성: 10 } },
+      },
+      {
+        id: 'D', text: '기업 행정·정보 처리 업무를 체험한다',
+        delta: { interest: { C: 25 }, aptitude: { 자기관리능력: 20, 수리논리력: 10 }, values: { 안정성: 20, 자기계발: 10 } },
+>>>>>>> c42df025a017331aba6fe69b38a2f6c37c23c874
       },
     ],
   },
@@ -246,7 +336,11 @@ const THEMES = [
 const INIT_SCORES = {
   interest: { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 },
   aptitude: { 언어능력: 0, 수리논리력: 0, 창의력: 0, 대인관계능력: 0, 자기관리능력: 0, 공간지각력: 0, 손재능: 0, 예술시각능력: 0 },
+<<<<<<< HEAD
   values: { 능력발휘: 0, 자율성: 0, 보수: 0, 안정성: 0, 사회적인정: 0, 사회봉사: 0, 자기계발: 0, 창의성: 0 },
+=======
+  values: { 안정성: 0, 보수: 0, 일과삶의균형: 0, 즐거움: 0, 자기계발: 0, 도전성: 0, 사회적기여: 0, 자율성: 0, 성취: 0 },
+>>>>>>> c42df025a017331aba6fe69b38a2f6c37c23c874
 }
 
 function addDelta(acc, delta) {
@@ -262,6 +356,7 @@ function normalizeGroup(obj) {
 
 export default function SituationTestPage() {
   const navigate = useNavigate()
+<<<<<<< HEAD
   const [phase, setPhase] = useState('select') // 'select' | 'quiz'
   const [theme, setTheme] = useState(null)
   const [qIdx, setQIdx] = useState(0)
@@ -324,6 +419,14 @@ export default function SituationTestPage() {
   const questions = theme.questions
   const q = questions[qIdx]
   const isLast = qIdx === questions.length - 1
+=======
+  const [currentIdx, setCurrentIdx] = useState(0)
+  const [selected, setSelected] = useState(null)
+  const [acc, setAcc] = useState(INIT_SCORES)
+
+  const situation = SITUATIONS[currentIdx]
+  const progress = (currentIdx / SITUATIONS.length) * 100
+>>>>>>> c42df025a017331aba6fe69b38a2f6c37c23c874
 
   function handleNext() {
     if (!selected) return
@@ -333,12 +436,21 @@ export default function SituationTestPage() {
       values: addDelta(acc.values, selected.delta.values),
     }
 
+<<<<<<< HEAD
     if (!isLast) {
       setAcc(newAcc)
       setQIdx(qIdx + 1)
       setSelected(null)
     } else {
       navigate('/result', {
+=======
+    if (currentIdx < SITUATIONS.length - 1) {
+      setAcc(newAcc)
+      setCurrentIdx(currentIdx + 1)
+      setSelected(null)
+    } else {
+      navigate('/reason', {
+>>>>>>> c42df025a017331aba6fe69b38a2f6c37c23c874
         state: {
           inputMode: 'situation',
           scores: {
@@ -354,6 +466,7 @@ export default function SituationTestPage() {
   return (
     <div className="page">
       <div className="card">
+<<<<<<< HEAD
 
         {/* 진행 바 */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 16 }}>
@@ -451,6 +564,53 @@ export default function SituationTestPage() {
           }}
         >
           {isLast ? '결과 보기 →' : '다음 →'}
+=======
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+          <span style={{ fontSize: 13, color: '#6B7280', fontWeight: 500 }}>
+            상황 {currentIdx + 1} / {SITUATIONS.length}
+          </span>
+          <span className="badge" style={{ margin: 0 }}>상황 선택형 검사</span>
+        </div>
+
+        <div className="progress-bar">
+          <div className="progress-fill" style={{ width: `${progress}%` }} />
+        </div>
+
+        <div style={{
+          background: '#F5F3FF',
+          borderRadius: 12,
+          padding: '13px 16px',
+          marginBottom: 16,
+          borderLeft: '3px solid #8B5CF6',
+        }}>
+          <p style={{ fontSize: 10, color: '#8B5CF6', fontWeight: 700, marginBottom: 5, textTransform: 'uppercase', letterSpacing: 1.2 }}>
+            상황
+          </p>
+          <p style={{ fontSize: 14, color: '#1F2937', fontWeight: 500, lineHeight: 1.55 }}>
+            {situation.context}
+          </p>
+        </div>
+
+        <p style={{ fontSize: 15, fontWeight: 700, color: '#1F2937', marginBottom: 16 }}>
+          {situation.question}
+        </p>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 9, marginBottom: 26 }}>
+          {situation.choices.map(choice => (
+            <button
+              key={choice.id}
+              className={`choice-btn${selected?.id === choice.id ? ' selected' : ''}`}
+              onClick={() => setSelected(choice)}
+            >
+              <span className="choice-label">{choice.id}</span>
+              <span className="choice-text">{choice.text}</span>
+            </button>
+          ))}
+        </div>
+
+        <button className="btn-primary" onClick={handleNext} disabled={!selected}>
+          {currentIdx < SITUATIONS.length - 1 ? '다음 상황 →' : '이유 입력하기 →'}
+>>>>>>> c42df025a017331aba6fe69b38a2f6c37c23c874
         </button>
       </div>
     </div>
