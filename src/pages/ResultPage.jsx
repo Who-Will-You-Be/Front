@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import { useRef, useState, useEffect } from 'react'
-=======
-import { useRef, useState } from 'react'
->>>>>>> c42df025a017331aba6fe69b38a2f6c37c23c874
 import { useNavigate, useLocation } from 'react-router-dom'
 import { toPng } from 'html-to-image'
 import jsPDF from 'jspdf'
@@ -20,8 +16,7 @@ const RIASEC = {
 const RIASEC_ORDER = ['R', 'I', 'A', 'S', 'E', 'C']
 const RIASEC_LABELS = ['R\n현실형', 'I\n탐구형', 'A\n예술형', 'S\n사회형', 'E\n기업형', 'C\n관습형']
 
-// ── 직업추천 모델 (한국직업정보 데이터 기반 코사인 유사도) ──────────────
-// 피처 순서: [성취/노력, 인내, 책임성과 진취성, 리더십, 혁신, 타인에 대한 배려] (1–5 스케일)
+// 피처 순서: [성취/노력, 인내, 책임성과 진취성, 리더십, 혁신, 타인에 대한 배려]
 const JOB_PROFILES = [
   { title: '소프트웨어 개발자', emoji: '💻', riasec: ['I', 'R'], desc: '알고리즘과 시스템을 논리적으로 설계하고 구현합니다.', features: [4.0, 3.8, 3.7, 2.8, 4.2, 2.5] },
   { title: '데이터사이언티스트', emoji: '📊', riasec: ['I', 'C'], desc: '데이터를 분석해 패턴과 인사이트를 발견합니다.', features: [4.2, 4.0, 3.8, 2.5, 4.5, 2.3] },
@@ -53,22 +48,20 @@ const JOB_PROFILES = [
   { title: '경찰관', emoji: '👮', riasec: ['S', 'E'], desc: '사회 안전을 지키고 시민을 보호합니다.', features: [4.0, 4.5, 4.7, 3.7, 2.8, 3.5] },
 ]
 
-// 웹 점수(0–100) → 모델 피처(1–5) 매핑
-<<<<<<< HEAD
-// 피처 순서: [성취/노력, 인내, 책임성과진취성, 리더십, 혁신, 타인에대한배려]
+// 피처 순서: [성취/노력, 인내, 책임성과 진취성, 리더십, 혁신, 타인에 대한 배려]
 function mapScoresToFeatures(scores) {
-  const n = v => Math.max(1, Math.min(5, v / 100 * 4 + 1))
+  const n = v => Math.max(1, Math.min(5, (v ?? 50) / 100 * 4 + 1))
+  const val = (key, fallback) => scores.values[key] ?? scores.values[fallback] ?? 50
   return [
-    n(scores.values.능력발휘),
-    n(scores.values.자기계발),
-    n(scores.values.사회적인정),
-    n(scores.interest.E),
-    n((scores.values.창의성 + scores.aptitude.창의력) / 2),
-    n((scores.aptitude.대인관계능력 + scores.values.사회봉사) / 2),
+    n(val('성취', '능력발휘')),
+    n(scores.aptitude.자기관리능력 ?? 50),
+    n(val('도전성', '자기계발')),
+    n(scores.interest.E ?? 50),
+    n(((scores.interest.I ?? 50) + (scores.aptitude.창의력 ?? 50)) / 2),
+    n(((scores.aptitude.대인관계능력 ?? 50) + val('사회적기여', '사회봉사')) / 2),
   ]
 }
 
-// 직업명 키워드 기반 이모지 매핑
 function getJobEmoji(name) {
   if (/개발자|프로그래머|엔지니어|IT|소프트웨어|데이터베이스|시스템/.test(name)) return '💻'
   if (/의사|의료|간호|약사|치료|재활/.test(name)) return '⚕️'
@@ -93,22 +86,6 @@ function getJobEmoji(name) {
   return '🎯'
 }
 
-// 로컬 폴백: API 실패 시 하드코딩 프로필로 계산
-=======
-// 노트북 피처: [성취/노력, 인내, 책임성과 진취성, 리더십, 혁신, 타인에 대한 배려]
-function mapScoresToFeatures(scores) {
-  const n = v => Math.max(1, Math.min(5, v / 100 * 4 + 1))
-  return [
-    n(scores.values.성취),
-    n(scores.aptitude.자기관리능력),
-    n(scores.values.도전성),
-    n(scores.interest.E),
-    n((scores.interest.I + scores.aptitude.창의력) / 2),
-    n((scores.aptitude.대인관계능력 + scores.values.사회적기여) / 2),
-  ]
-}
-
->>>>>>> c42df025a017331aba6fe69b38a2f6c37c23c874
 function cosineSim(a, b) {
   const dot = a.reduce((s, ai, i) => s + ai * b[i], 0)
   const mag = v => Math.sqrt(v.reduce((s, x) => s + x * x, 0))
@@ -116,7 +93,6 @@ function cosineSim(a, b) {
   return denom ? dot / denom : 0
 }
 
-<<<<<<< HEAD
 function getLocalCareerMatches(scores) {
   const user = mapScoresToFeatures(scores)
   return JOB_PROFILES
@@ -129,13 +105,6 @@ function getLocalCareerMatches(scores) {
       _desc: job.desc,
     }))
     .sort((a, b) => b.similarity_score - a.similarity_score)
-=======
-function getCareerMatches(scores) {
-  const user = mapScoresToFeatures(scores)
-  return JOB_PROFILES
-    .map(job => ({ ...job, matchPct: Math.round(cosineSim(user, job.features) * 100) }))
-    .sort((a, b) => b.matchPct - a.matchPct)
->>>>>>> c42df025a017331aba6fe69b38a2f6c37c23c874
     .slice(0, 4)
 }
 
@@ -156,15 +125,10 @@ const APT_SHORT = {
   손재능: '손재주', 예술시각능력: '시각적 감수성',
 }
 const VAL_SHORT = {
-<<<<<<< HEAD
-  능력발휘: '능력 발휘', 자율성: '자율성', 보수: '합당한 보상',
-  안정성: '안정감', 사회적인정: '사회적 인정', 사회봉사: '사회 봉사',
-  자기계발: '지속 성장', 창의성: '창의성',
-=======
   안정성: '안정감', 보수: '합당한 보상', 일과삶의균형: '일·삶 균형',
   즐거움: '즐거움', 자기계발: '지속 성장', 도전성: '도전 정신',
   사회적기여: '사회 기여', 자율성: '자율성', 성취: '성취감',
->>>>>>> c42df025a017331aba6fe69b38a2f6c37c23c874
+  능력발휘: '능력 발휘', 사회적인정: '사회적 인정', 사회봉사: '사회 봉사', 창의성: '창의적 사고',
 }
 
 function generateNarrative(scores) {
@@ -187,7 +151,6 @@ export default function ResultPage() {
   const { scores, reason } = state
   const resultRef = useRef(null)
   const [exporting, setExporting] = useState(null) // 'png' | 'pdf' | null
-<<<<<<< HEAD
   const [careers, setCareers] = useState([])
   const [careersLoading, setCareersLoading] = useState(true)
   const [careersSource, setCareersSource] = useState('api') // 'api' | 'local'
@@ -211,12 +174,8 @@ export default function ResultPage() {
       })
       .finally(() => setCareersLoading(false))
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
-=======
->>>>>>> c42df025a017331aba6fe69b38a2f6c37c23c874
 
   async function capture() {
-    // html-to-image는 SVG를 포함한 DOM을 정확히 캡처함
-    // 첫 번째 호출에서 폰트가 누락될 수 있어 두 번 호출
     await toPng(resultRef.current, { pixelRatio: 2, backgroundColor: '#F5F3FF' })
     return toPng(resultRef.current, { pixelRatio: 2, backgroundColor: '#F5F3FF' })
   }
@@ -270,10 +229,6 @@ export default function ResultPage() {
     .map(([k]) => k)
   const sortedAptitude = Object.entries(scores.aptitude).sort(([, a], [, b]) => b - a)
   const sortedValues = Object.entries(scores.values).sort(([, a], [, b]) => b - a)
-<<<<<<< HEAD
-=======
-  const careers = getCareerMatches(scores)
->>>>>>> c42df025a017331aba6fe69b38a2f6c37c23c874
   const radarData = RIASEC_ORDER.map(code => scores.interest[code] || 0)
 
   return (
@@ -436,7 +391,6 @@ export default function ResultPage() {
             흥미 · 적성 · 가치관 3축 종합 분석 기반 추천입니다.
           </p>
 
-<<<<<<< HEAD
           {careersLoading ? (
             <div style={{
               padding: '32px 0', textAlign: 'center', color: '#9CA3AF', fontSize: 14,
@@ -502,7 +456,6 @@ export default function ResultPage() {
                             ))}
                           </div>
                         )}
-                        {/* 관련 대학/학과 */}
                         {career.schools && career.schools.length > 0 && (
                           <div style={{
                             marginTop: 8, padding: '8px 10px',
@@ -527,77 +480,16 @@ export default function ResultPage() {
               })}
             </div>
           )}
-=======
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 11 }}>
-            {careers.map((career, i) => (
-              <div key={i} style={{
-                padding: '14px 15px',
-                border: `1.5px solid ${i === 0 ? '#DDD6FE' : '#E5E7EB'}`,
-                borderRadius: 12,
-                background: i === 0 ? '#FAFAFF' : 'white',
-              }}>
-                <div style={{ display: 'flex', gap: 13, alignItems: 'flex-start' }}>
-                  <div style={{
-                    width: 40, height: 40, borderRadius: 10, background: '#F5F3FF',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontSize: 20, flexShrink: 0,
-                  }}>
-                    {career.emoji}
-                  </div>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 3 }}>
-                      <p style={{ fontWeight: 700, color: '#1F2937', fontSize: 14 }}>{career.title}</p>
-                      <span style={{
-                        fontSize: 12, fontWeight: 800, color: '#7C3AED',
-                        background: '#F5F3FF', padding: '2px 9px', borderRadius: 100,
-                        border: '1px solid #DDD6FE',
-                      }}>
-                        {career.matchPct}%
-                      </span>
-                    </div>
-                    <p style={{ fontSize: 12, color: '#6B7280', lineHeight: 1.55, marginBottom: 8 }}>
-                      {career.desc}
-                    </p>
-                    <div style={{ height: 4, background: '#F3F4F6', borderRadius: 4, overflow: 'hidden', marginBottom: 8 }}>
-                      <div style={{
-                        height: '100%',
-                        width: `${career.matchPct}%`,
-                        background: 'linear-gradient(90deg, #8B5CF6, #6366F1)',
-                        borderRadius: 4,
-                      }} />
-                    </div>
-                    <div style={{ display: 'flex', gap: 5 }}>
-                      {career.riasec.map(code => (
-                        <span key={code} style={{
-                          fontSize: 11, padding: '2px 9px', borderRadius: 100,
-                          background: RIASEC[code].color + '18', color: RIASEC[code].color,
-                          fontWeight: 700, border: `1px solid ${RIASEC[code].color}30`,
-                        }}>
-                          {code} {RIASEC[code].label}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
->>>>>>> c42df025a017331aba6fe69b38a2f6c37c23c874
 
           <div style={{
             marginTop: 18, padding: '12px 14px', background: '#F9FAFB',
             border: '1px solid #E5E7EB', borderRadius: 10,
             fontSize: 12, color: '#9CA3AF', lineHeight: 1.65,
           }}>
-<<<<<<< HEAD
             {careersSource === 'api'
               ? '💡 한국직업정보 재직자 데이터 기반 570개 직업 코사인 유사도 분석 결과입니다.'
               : '💡 로컬 데이터로 분석했습니다. 더 정확한 결과를 위해 추천 서버를 실행해주세요.'
             }
-=======
-            💡 한국직업정보 재직자 데이터 기반 코사인 유사도 직업 추천 모델 결과입니다.<br />
-            성취·인내·도전성·리더십·혁신·배려 6개 특성 벡터를 분석합니다.
->>>>>>> c42df025a017331aba6fe69b38a2f6c37c23c874
           </div>
         </div>
 

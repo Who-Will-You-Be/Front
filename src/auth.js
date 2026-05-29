@@ -1,4 +1,16 @@
 const SESSION_KEY = 'app_session'
+const USERS_KEY = 'app_registered_users'
+const API_BASE = import.meta.env.VITE_API_BASE_URL ?? ''
+
+function getRegisteredUsers() {
+  return JSON.parse(localStorage.getItem(USERS_KEY) || '[]')
+}
+
+function addRegisteredUser(userId, email) {
+  const users = getRegisteredUsers()
+  users.push({ userId, email })
+  localStorage.setItem(USERS_KEY, JSON.stringify(users))
+}
 
 async function parseError(res) {
   try {
@@ -10,7 +22,11 @@ async function parseError(res) {
 }
 
 export async function signup({ id, password, name, school, grade, email }) {
-  const res = await fetch('/api/auth/register', {
+  const users = getRegisteredUsers()
+  if (users.some(u => u.userId === id)) return { error: '이미 사용 중인 아이디입니다.' }
+  if (users.some(u => u.email === email)) return { error: '이미 가입된 이메일입니다.' }
+
+  const res = await fetch(`${API_BASE}/api/auth/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ userId: id, password, name, school, grade, email }),
@@ -19,11 +35,12 @@ export async function signup({ id, password, name, school, grade, email }) {
     const error = await parseError(res)
     return { error }
   }
+  addRegisteredUser(id, email)
   return { ok: true }
 }
 
 export async function login({ id, password }) {
-  const res = await fetch('/api/auth/login', {
+  const res = await fetch(`${API_BASE}/api/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ userId: id, password }),
@@ -39,7 +56,7 @@ export async function login({ id, password }) {
 export async function logout() {
   const session = getSession()
   if (session?.sessionId) {
-    await fetch('/api/auth/logout', {
+    await fetch(`${API_BASE}/api/auth/logout`, {
       method: 'POST',
       headers: { 'X-Session-ID': session.sessionId },
     }).catch(() => {})

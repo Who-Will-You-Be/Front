@@ -7,7 +7,6 @@ export default function MainPage() {
   return (
     <div className="page">
       <div className="card" style={{ textAlign: 'center' }}>
-        <div className="badge">공공데이터 분석 대회 프로토타입</div>
         <div style={{ fontSize: 52, marginBottom: 18 }}>🧭</div>
         <h1 style={{ fontSize: 24, fontWeight: 800, lineHeight: 1.4, marginBottom: 16, color: '#1F2937' }}>
           AI 자기이해 기반 진로탐색
@@ -34,7 +33,7 @@ export default function MainPage() {
           ))}
         </div>
 
-        <button className="btn-primary" onClick={() => navigate(isLoggedIn() ? '/input-mode' : '/login')}>
+        <button className="btn-primary" onClick={() => navigate(isLoggedIn() ? '/situation-test' : '/login')}>
           진로 탐색 시작하기
         </button>
       </div>

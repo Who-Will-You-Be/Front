@@ -20,7 +20,6 @@ export default defineConfig({
         changeOrigin: true,
       },
       '/api/ollama': {
-<<<<<<< HEAD
         target: 'http://localhost:8080',
         changeOrigin: true,
       },
@@ -28,11 +27,6 @@ export default defineConfig({
         target: 'http://localhost:8001',
         changeOrigin: true,
         rewrite: path => path.replace(/^\/api\/model/, ''),
-=======
-        target: 'http://localhost:11434',
-        changeOrigin: true,
-        rewrite: path => path.replace(/^\/api\/ollama/, ''),
->>>>>>> c42df025a017331aba6fe69b38a2f6c37c23c874
       },
     },
   },

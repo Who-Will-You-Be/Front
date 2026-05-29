@@ -18,7 +18,7 @@ export default function LoginPage() {
       if (result.error) {
         setError(result.error)
       } else {
-        navigate('/input-mode')
+        navigate('/situation-test')
       }
     } catch {
       setError('서버에 연결할 수 없습니다.')

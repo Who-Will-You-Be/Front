@@ -4,10 +4,17 @@ import { signup } from '../auth'
 
 const GRADES = ['초4', '초5', '초6', '중1', '중2', '중3', '고1', '고2']
 
-async function searchSchools(query) {
-  if (!query.trim()) return []
+function gradeToSchoolKind(grade) {
+  if (grade.startsWith('초')) return '초등학교'
+  if (grade.startsWith('중')) return '중학교'
+  if (grade.startsWith('고')) return '고등학교'
+  return ''
+}
+
+async function searchSchools(query, schoolKind) {
+  if (!query.trim() || !schoolKind) return []
   const res = await fetch(
-    `/api/neis/hub/schoolInfo?Type=json&pSize=10&SCHUL_NM=${encodeURIComponent(query)}`
+    `/api/neis/hub/schoolInfo?Type=json&pSize=10&SCHUL_NM=${encodeURIComponent(query)}&SCHUL_KND_SC_NM=${encodeURIComponent(schoolKind)}`
   )
   const data = await res.json()
   if (!data.schoolInfo) return []
@@ -37,7 +44,7 @@ export default function SignupPage() {
     debounceRef.current = setTimeout(async () => {
       setSchoolLoading(true)
       try {
-        const rows = await searchSchools(schoolQuery)
+        const rows = await searchSchools(schoolQuery, gradeToSchoolKind(form.grade))
         setSchoolResults(rows)
       } finally {
         setSchoolLoading(false)
@@ -45,7 +52,7 @@ export default function SignupPage() {
     }, 350)
 
     return () => clearTimeout(debounceRef.current)
-  }, [schoolQuery, schoolSelected])
+  }, [schoolQuery, schoolSelected, form.grade])
 
   useEffect(() => {
     function handleClick(e) {
@@ -66,7 +73,16 @@ export default function SignupPage() {
   }
 
   function set(key) {
-    return e => setForm(f => ({ ...f, [key]: e.target.value }))
+    return e => {
+      const value = e.target.value
+      setForm(f => ({ ...f, [key]: value }))
+      if (key === 'grade') {
+        setSchoolQuery('')
+        setSchoolSelected(false)
+        setSchoolResults([])
+        setForm(f => ({ ...f, grade: value, school: '' }))
+      }
+    }
   }
 
   async function handleSubmit(e) {
@@ -119,7 +135,8 @@ export default function SignupPage() {
                   setSchoolSelected(false)
                   setForm(f => ({ ...f, school: '' }))
                 }}
-                placeholder="학교명 검색"
+                placeholder={form.grade ? `${gradeToSchoolKind(form.grade)} 검색` : '학년을 먼저 선택해주세요'}
+                disabled={!form.grade}
                 autoComplete="off"
               />
               {schoolLoading && (

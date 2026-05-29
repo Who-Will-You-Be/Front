@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import MainPage from './pages/MainPage'
 import LoginPage from './pages/LoginPage'
 import SignupPage from './pages/SignupPage'
-import InputModePage from './pages/InputModePage'
 import DirectInputPage from './pages/DirectInputPage'
 import DirectInputManualPage from './pages/DirectInputManualPage'
 import ImageInputPage from './pages/ImageInputPage'
@@ -21,7 +20,6 @@ function App() {
         <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
-        <Route path="/input-mode" element={<ProtectedRoute><InputModePage /></ProtectedRoute>} />
         <Route path="/direct-input" element={<ProtectedRoute><DirectInputPage /></ProtectedRoute>} />
         <Route path="/direct-input-manual" element={<ProtectedRoute><DirectInputManualPage /></ProtectedRoute>} />
         <Route path="/image-input" element={<ProtectedRoute><ImageInputPage /></ProtectedRoute>} />
