@@ -11,10 +11,12 @@ function gradeToSchoolKind(grade) {
   return ''
 }
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL ?? ''
+
 async function searchSchools(query, schoolKind) {
   if (!query.trim() || !schoolKind) return []
   const res = await fetch(
-    `/api/neis/hub/schoolInfo?Type=json&pSize=10&SCHUL_NM=${encodeURIComponent(query)}&SCHUL_KND_SC_NM=${encodeURIComponent(schoolKind)}`
+    `${API_BASE}/api/neis/hub/schoolInfo?Type=json&pSize=10&SCHUL_NM=${encodeURIComponent(query)}&SCHUL_KND_SC_NM=${encodeURIComponent(schoolKind)}`
   )
   const data = await res.json()
   if (!data.schoolInfo) return []

@@ -4,6 +4,8 @@ import { toPng } from 'html-to-image'
 import jsPDF from 'jspdf'
 import RadarChart from '../components/RadarChart'
 
+const MODEL_RECOMMEND_URL = import.meta.env.VITE_MODEL_RECOMMEND_URL ?? ''
+
 const RIASEC = {
   R: { label: '현실형', desc: '도구·기계 다루기', color: '#F59E0B', emoji: '🔧' },
   I: { label: '탐구형', desc: '분석·연구·과학', color: '#3B82F6', emoji: '🔬' },
@@ -157,7 +159,7 @@ export default function ResultPage() {
 
   useEffect(() => {
     const features = mapScoresToFeatures(scores)
-    fetch('/api/model/recommend', {
+    fetch(MODEL_RECOMMEND_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ user_scores: features, top_n: 4 }),

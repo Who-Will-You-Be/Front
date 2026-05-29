@@ -12,6 +12,7 @@ const VALUES_ITEMS = [
   '자기계발', '도전성', '사회적기여', '자율성', '성취',
 ]
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL ?? ''
 const OLLAMA_MODEL = 'meta-llama/llama-4-scout-17b-16e-instruct'
 const MAX_IMAGES = 3
 
@@ -55,7 +56,7 @@ async function analyzeImage(dataUrl) {
   const resized = await resizeImage(dataUrl)
   const base64 = resized.split(',')[1]
 
-  const res = await fetch('/api/ollama/api/generate', {
+  const res = await fetch(`${API_BASE}/api/ollama/api/generate`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
